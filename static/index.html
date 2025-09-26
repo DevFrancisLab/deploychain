@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DeployChain Dashboard</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .deployment { border: 1px solid #ccc; margin: 10px 0; padding: 15px; }
+        .dapp { border-left: 4px solid #007cba; background: #f0f8ff; }
+        .status { padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .deployed { background: #28a745; color: white; }
+        .pending { background: #ffc107; color: black; }
+    </style>
+</head>
+<body>
+    <h1>🚀 DeployChain Dashboard</h1>
+    <div id="deployments">Loading...</div>
+
+    <script>
+        fetch('/api/deployments')
+            .then(r => r.json())
+            .then(data => {
+                const html = data.map(d => `
+                    <div class="deployment ${d.deployment_type === 'dapp' ? 'dapp' : ''}">
+                        <h3>${d.project_name} ${d.deployment_type === 'dapp' ? '(dApp)' : ''}</h3>
+                        <span class="status ${d.status}">${d.status}</span>
+                        ${d.url ? `<p>URL: <a href="${d.url}">${d.url}</a></p>` : ''}
+                        ${d.contracts ? `<p>Contracts: ${JSON.stringify(d.contracts)}</p>` : ''}
+                    </div>
+                `).join('');
+                document.getElementById('deployments').innerHTML = html;
+            })
+            .catch(e => {
+                document.getElementById('deployments').innerHTML = '❌ Failed to load';
+            });
+    </script>
+</body>
+</html>
