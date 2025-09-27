@@ -18,7 +18,7 @@ curl -X POST http://localhost:18080/api/deploy \
   -d '{
     "repo_url": "https://github.com/JuliusMutugu/BOOTCAM_CHAINS.git",
     "branch": "main",
-    "project_name": "my-dapp-002"
+    "project_name": "my-dapp-009"
   }'
 
 ### GET Deployments
