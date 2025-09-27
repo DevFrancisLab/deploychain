@@ -10,13 +10,13 @@ test:
 	go test ./... -v
 
 build:
-	CGO_ENABLED=0 GOOS=linux go build -o deploychain ./main.go
+	CGO_ENABLED=0 GOOS=linux go build -o ./bin/deploychain ./main.go
 
 docker-build:
-	docker build -t deploychain:latest .
+	docker build -t ranckosolutionsinc/deploychain:latest .
 
 docker-run:
-	docker run -d -p 8080:8080 --env-file .env deploychain:latest
+	docker run -d -p 18080:18080 --env-file .env ranckosolutionsinc/deploychain:latest
 
 format:
 	go fmt ./...
@@ -30,3 +30,4 @@ test-multibaas:
 test-coverage:
 	go test ./... -coverprofile=coverage.out
 	go tool cover -html=coverage.out -o coverage.html
+

@@ -2,16 +2,17 @@
 package services
 
 import (
-    "context"
-    "encoding/json"
-    "fmt"
-    "log"
-    "strings"
-    "time"
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"os"
+	"strings"
+	"time"
 
-    "deploychain/models"
+	"deploychain/models"
 
-    "dagger.io/dagger"
+	"dagger.io/dagger"
 )
 
 // DaggerService handles build and deployment pipelines
@@ -21,7 +22,7 @@ type DaggerService struct {
 
 // NewDaggerService initializes a new Dagger client
 func NewDaggerService() *DaggerService {
-    client, err := dagger.Connect(context.Background())
+    client, err := dagger.Connect(context.Background(), dagger.WithLogOutput(os.Stdout))
     if err != nil {
         log.Fatalf("Failed to initialize Dagger client: %v", err)
     }
@@ -97,10 +98,11 @@ func (ds *DaggerService) compileContracts(ctx context.Context, repo *dagger.Dire
     // Use Hardhat container to compile contracts
     output := ds.client.Container().
         From("node:18").
-        WithMountedDirectory("/src", repo).
-        WithWorkdir("/src").
-        WithExec([]string{"npx", "hardhat", "compile"}).
-        Directory("/src/artifacts/contracts")
+        WithMountedDirectory("/", repo).
+        WithWorkdir("/").
+        WithExec([]string{"/usr/local/bin/npm", "install"}).
+        WithExec([]string{"/usr/local/bin/npx", "hardhat", "compile"}).
+        Directory("/artifacts/contracts")
 
     // Process compiled contracts
     entries, err := output.Entries(ctx)
@@ -149,8 +151,8 @@ func (ds *DaggerService) buildFrontend(ctx context.Context, repo *dagger.Directo
             From("node:18").
             WithMountedDirectory("/src", repo).
             WithWorkdir("/src").
-            WithExec([]string{"npm", "install"}).
-            WithExec([]string{"npm", "run", "build"}).
+            WithExec([]string{"/usr/local/bin/npm", "install"}).
+            WithExec([]string{"/usr/local/bin/npx", "run", "build"}).
             Directory("/src/out")
     } else {
         // Try to find static site directory - first check public/

@@ -1,0 +1,28 @@
+### HEalth Check
+curl -X GET http://localhost:18080/api/health \
+  -H "Content-Type: application/json"
+
+
+### Example HTTP Request to Deploy Scaffold-Eth 2 DApp
+curl -X POST http://localhost:18080/api/deploy \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repo_url": "https://github.com/scaffold-eth/scaffold-eth-2.git",
+    "branch": "main",
+    "project_name": "scaffold-eth-dapp"
+  }'
+
+### Example HTTP Request to Deploy Scaffold-Eth Smart Contract
+curl -X POST http://localhost:18080/api/deploy \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repo_url": "https://github.com/JuliusMutugu/BOOTCAM_CHAINS.git",
+    "branch": "main",
+    "project_name": "my-dapp-002"
+  }'
+
+### GET Deployments
+curl -X GET http://localhost:18080/api/deployments \
+  -H "Content-Type: application/json"
+
+### 
