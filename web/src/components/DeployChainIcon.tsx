@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const DeployChainIcon = () => {
   return (
     <motion.div
-      className="flex items-center justify-center w-16 h-16 mb-8"
+      className="flex items-left fixed top-0 left-3 right-0 z-50 w-16 h-16 "
       animate={{ rotate: 360 }}
       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
     >
