@@ -15,4 +15,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  preview: {
+    allowedHosts: ['deploychain.locci.cloud'], // Allow specific hosts
+    // Or use true to allow all hosts
+    // allowedHosts: true,
+  },
 }));
