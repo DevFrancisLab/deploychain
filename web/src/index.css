@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Web3 Blue Theme */
+    --primary: 220 91% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-dark: 220 100% 35%;
+    
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 91% 51%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 220 100% 90%;
+    --accent-foreground: 220 91% 51%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 91% 51%;
+
+    /* Web3 Design Tokens */
+    --hero-gradient: linear-gradient(135deg, hsl(220 100% 35%) 0%, hsl(220 91% 51%) 100%);
+    --card-gradient: linear-gradient(135deg, hsl(220 100% 98%) 0%, hsl(220 14% 96%) 100%);
+    --feature-gradient: linear-gradient(135deg, hsl(220 100% 95%) 0%, hsl(220 100% 90%) 100%);
+    
+    --shadow-web3: 0 10px 30px -10px hsl(220 91% 51% / 0.3);
+    --shadow-hover: 0 20px 40px -15px hsl(220 91% 51% / 0.4);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 26% 9%;
+    --foreground: 220 14% 96%;
+
+    --card: 220 26% 9%;
+    --card-foreground: 220 14% 96%;
+
+    --popover: 220 26% 9%;
+    --popover-foreground: 220 14% 96%;
+
+    --primary: 220 91% 51%;
+    --primary-foreground: 0 0% 100%;
+    --primary-dark: 220 100% 35%;
+
+    --secondary: 220 26% 15%;
+    --secondary-foreground: 220 14% 96%;
+
+    --muted: 220 26% 15%;
+    --muted-foreground: 220 14% 65%;
+
+    --accent: 220 26% 15%;
+    --accent-foreground: 220 14% 96%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 220 14% 96%;
+
+    --border: 220 26% 15%;
+    --input: 220 26% 15%;
+    --ring: 220 91% 51%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+@layer components {
+  /* Web3 Button Variants */
+  .btn-hero {
+    @apply bg-primary hover:bg-primary-dark text-primary-foreground font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-hover;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105;
+  }
+  
+  /* Card Styles */
+  .card-problem {
+    @apply bg-secondary p-6 rounded-xl shadow-web3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-hover;
+  }
+  
+  .card-feature {
+    @apply bg-feature-gradient p-6 rounded-xl shadow-web3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-hover border border-accent;
+  }
+  
+  .card-deployment {
+    @apply bg-card border border-border p-6 rounded-xl shadow-web3 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105;
+  }
+  
+  /* Gradients */
+  .bg-hero-gradient {
+    background: var(--hero-gradient);
+  }
+  
+  /* Typography */
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Shadows */
+  .shadow-web3 {
+    box-shadow: var(--shadow-web3);
+  }
+  
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+}
