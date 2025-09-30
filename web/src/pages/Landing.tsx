@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
-import { Activity } from 'lucide-react';
 import DeployChainIcon from '@/components/DeployChainIcon';
 import DeploymentCard from '@/components/DeploymentCard';
-import { DeploymentPipelineCanvas } from '@/components/DeploymentPipelineCanvas';
-import deploymentPipeline from '@/assets/deployment-pipeline.jpg';
+import block from '@/assets/block.png';
+import Deploy from '@/assets/Deploy.svg';
+
 
 interface Deployment {
   id: number;
@@ -139,34 +139,42 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+  <div className="min-h-screen bg-background">
       {/* Navigation */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+        className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-lg border-b border-transparent"
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-primary">DeployChain</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              {['hero', 'problem', 'solution', 'features', 'demo', 'deployments', 'try-it'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => smoothScrollTo(section)}
-                  className="text-muted-foreground hover:text-primary transition-colors capitalize"
-                >
-                  {section.replace('-', ' ')}
-                </button>
-              ))}
+             <div className="flex-shrink-0">
+   <div className="flex-shrink-0 flex items-center gap-2">
+  <DeployChainIcon className="w-8 h-8 md:w-10 md:h-10" />
+  <span className="text-white text-lg md:text-xl font-bold tracking-wide">DeployChain</span>
+</div>
+  </div> 
+</div>
+            <div className="hidden md:flex space-x-8">
+              <button
+                onClick={() => smoothScrollTo('problem')}
+                className="text-white hover:text-primary transition-colors capitalize"
+              >
+                About
+              </button>
+              <button
+                onClick={() => smoothScrollTo('features')}
+                className="text-white hover:text-primary transition-colors capitalize"
+              >
+                Features
+              </button>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="btn-hero py-2 px-4 text-sm flex items-center gap-2"
+                className="ml-2 px-4 py-2 rounded bg-primary text-primary-foreground font-semibold hover:bg-primary/80 transition-colors shadow"
+                style={{ minWidth: '120px' }}
               >
-                <Activity className="h-4 w-4" />
-                Dashboard
+                Try It Now
               </button>
             </div>
           </div>
@@ -174,37 +182,45 @@ const Landing = () => {
       </motion.nav>
 
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center bg-hero-gradient text-white pt-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section id="hero" className="relative min-h-screen flex items-center justify-center bg-hero-gradient text-white pt-16 overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 bg-black"
+          style={{ backgroundColor: '#111', backgroundImage: 'none' }}
+        >
+          <source src="/Your%20paragraph%20text.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay to prevent white blink */}
+        <div className="absolute inset-0 w-full h-full z-0 pointer-events-none" style={{ background: 'rgba(10,10,20,0.7)' }} />
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="w-full"
           >
-            <DeployChainIcon />
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">DeployChain</h1>
-            <p className="text-2xl md:text-3xl mb-4 font-light">
+           
+            <h1 className="flex items-center justify-center gap-3 text-3xl xs:text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6">
+  <img src={Deploy} alt="DeployChain Logo" className="h-34 md:h-26 w-auto inline-block" /> 
+</h1>
+   <p className="text-lg xs:text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-4 font-light">
               Vercel for Web3: Deploy dApps with One Git Push
             </p>
-            <p className="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto">
+            <p className="text-base xs:text-lg sm:text-xl md:text-2xl mb-6 sm:mb-12 text-blue-100 max-w-3xl mx-auto">
               Smart contracts + frontend deployed seamlessly to Sepolia testnet.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center w-full items-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => smoothScrollTo('try-it')}
-                className="btn-hero"
+                onClick={() => navigate('/dashboard')}
+                className="btn-hero w-full sm:w-auto"
               >
                 Try It Now
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => smoothScrollTo('demo')}
-                className="btn-outline"
-              >
-                Watch Demo
               </motion.button>
             </div>
           </motion.div>
@@ -245,10 +261,10 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="card-problem"
+                className="card-problem p-6 rounded-xl shadow-md bg-white/80 dark:bg-gray-900/80 text-center flex flex-col items-center"
               >
-                <h3 className="text-xl font-semibold text-foreground mb-4">{problem.title}</h3>
-                <p className="text-muted-foreground">{problem.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-4">{problem.title}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground">{problem.description}</p>
               </motion.div>
             ))}
           </div>
@@ -272,7 +288,18 @@ const Landing = () => {
               and provides you with a complete dashboard to track your dApp's performance.
             </p>
           </motion.div>
-          <DeploymentPipelineCanvas />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="flex justify-center"
+          >
+            <img
+              src={block}
+              alt="DeployChain deployment pipeline flowchart"
+              className="w-full max-w-4xl rounded-xl shadow-web3"
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -312,129 +339,13 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="card-feature"
+                className="card-feature p-6 rounded-xl shadow-md bg-white/80 dark:bg-gray-900/80 text-center flex flex-col items-center"
               >
-                <h3 className="text-xl font-semibold text-primary mb-4">{feature.title}</h3>
-                <p className="text-accent-foreground">{feature.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2 sm:mb-4">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-accent-foreground">{feature.description}</p>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Demo Section */}
-      <section id="demo" className="py-20 bg-muted">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              See It in Action
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-              Watch how DeployChain transforms your Web3 development workflow in just 30 seconds.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="flex justify-center"
-          >
-            <div className="w-full max-w-4xl aspect-video">
-              <iframe
-                className="w-full h-full rounded-xl shadow-web3"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="DeployChain Demo Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Deployments Section */}
-      <section id="deployments" className="py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Recent Deployments
-            </h2>
-          </motion.div>
-          {loading ? (
-            <div className="text-center">
-              <div className="inline-flex items-center px-4 py-2 font-semibold leading-6 text-primary transition ease-in-out duration-150">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Loading deployments...
-              </div>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 gap-8">
-              {deployments.map((deployment, index) => (
-                <DeploymentCard
-                  key={deployment.id}
-                  deployment={deployment}
-                  index={index}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Try It Section */}
-      <section id="try-it" className="py-20 bg-primary text-primary-foreground">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Try DeployChain Now</h2>
-            <p className="text-xl max-w-3xl mx-auto mb-12 text-blue-100">
-              Deploy your dApp in minutes. Access the dashboard to manage your deployments.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/dashboard')}
-              className="bg-white text-primary hover:bg-gray-100 font-semibold px-12 py-5 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-hover text-lg flex items-center gap-3 mx-auto"
-            >
-              <Activity className="h-6 w-6" />
-              Go to Dashboard
-            </motion.button>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <p className="text-blue-100">
-              Contact: <a href="mailto:arivtechcenter@gmail.com" className="underline hover:text-white transition-colors">arivtechcenter@gmail.com</a>
-            </p>
-          </motion.div>
         </div>
       </section>
 
@@ -443,8 +354,7 @@ const Landing = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-gray-300 mb-4">
-              © 2025 DeployChain by ARIV TECH CENTER. Built for Nairobi Mini Hack.
-            </p>
+              © 2025 DeployChain</p>
             <div className="flex justify-center space-x-6">
               <a
                 href="https://www.multibaas.com/"
