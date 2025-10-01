@@ -8,16 +8,21 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 5173,
+    // hmr: {
+    //   clientPort: 80, // Use 80 for HTTP tunnels // 443 for HTTPS tunnels
+    // },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger()].filter(
+    Boolean
+  ),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   preview: {
-    allowedHosts: ['deploychain.locci.cloud'], // Allow specific hosts
+    allowedHosts: true,
+    // allowedHosts: ['deploychain.locci.cloud'], // Allow specific hosts
     // Or use true to allow all hosts
-    // allowedHosts: true,
   },
 }));
