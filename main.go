@@ -64,8 +64,10 @@ func setupRoutes(handler *handlers.Handler) *gin.Engine {
 	config.AllowOrigins = []string{
 		"http://localhost:3000",           // React dev server
 		"http://localhost:3001",           // Alternative React port
-		"http://localhost:5173",           // Same origin
+		"http://localhost:5173",           // Vite app
+		"http://localhost:18080",          // Same origin
 		"https://deploychain.locci.cloud", // Production frontend
+		"https://d7530e20aa70.ngrok-free.app", // Production frontend
 	}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization", "Accept", "X-Requested-With"}
